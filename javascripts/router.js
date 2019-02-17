@@ -1,3 +1,7 @@
+var Profile = require("./profile.js");
+
+
+
 
 //handle HTTP route GET / and POST /
 function home(request, response) {
@@ -15,6 +19,24 @@ function user(request, response) {
     if(username.length > 0) {
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.write("Header\n");
+        //get JSON
+        var studentProfile = new Profile(username);
+        
+        studentProfile.on("end", function(profileJSON){
+            
+            var values = {
+                avatarURL: profileJSON.gravatar_url,
+                username: profileJSON.profile_name,
+                badges: profileJSON.badges.length,
+                javascriptPoints: profileJSON.points.JavaScript,
+            }
+            //simple response
+            
+        });
+        studentProfile.on("error", function(error){
+
+        });
+
         response.write(username + "\n");
         response.end('footer\n');
 
