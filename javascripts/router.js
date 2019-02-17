@@ -1,8 +1,6 @@
 var Profile = require("./profile.js");
 
 
-
-
 //handle HTTP route GET / and POST /
 function home(request, response) {
     if(request.url === "/") {
@@ -31,18 +29,16 @@ function user(request, response) {
                 javascriptPoints: profileJSON.points.JavaScript,
             }
             //simple response
-            
+            response.write(values.username + " has " + values.badges + "badges\n");
+            response.end('footer\n');
         });
         studentProfile.on("error", function(error){
-
+            response.write(error.message + "\n");
+            response.end('footer\n')
         });
-
-        response.write(username + "\n");
-        response.end('footer\n');
 
     }
 }
-
 
 module.exports.home = home;
 module.exports.user = user;

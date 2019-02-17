@@ -1,4 +1,4 @@
-var router = require("./router");
+var router = require("./router.js");
 
 //create web server
 var http = require('http');
