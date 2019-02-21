@@ -30,14 +30,22 @@ function Profile(username) {
             profileEmitter.emit("data", chunk);
         });
 
-  
+        response.on('end', function () {
+            if(response.statusCode === 200) {
+                try {
+                    //Parse the data
+                    var profile = JSON.parse(body);
+                    profileEmitter.emit("end", profile);
+                } catch (error) {
+                    profileEmitter.emit("error", error);
+                }
+            }
+        }).on("error", function(error){
+            profileEmitter.emit("error", error);
+        });
+    });
+}
 
+util.inherits( Profile, EventEmitter );
 
-
-
-
-
-
-
-
-
+module.exports = Profile; 
